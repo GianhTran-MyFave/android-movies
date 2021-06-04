@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@android:color/black</color>
+    <color name="colorPrimaryDark">@android:color/black</color>
+    <color name="colorAccent">@android:color/black</color>
+    <color name="movie_overview_text_color">@android:color/black</color>
+    <color name="movie_review_text_color">@android:color/black</color>
+    <color name="boston_blue">#357EBD</color>
+    <color name="mine_shaft">#212121</color>
+    <color name="amber">#F7C000</color>
+</resources>

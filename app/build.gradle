@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.madison.client.movies"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        archivesBaseName = "movies-v$versionCode($versionName)"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+
+        buildConfigField "String", "API_KEY", API_KEY
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        develop {
+            manifestPlaceholders = [applicationName: "Movies-DEV"]
+        }
+
+        production {
+            manifestPlaceholders = [applicationName: "@string/app_name"]
+        }
+    }
+
+    applicationVariants.all { variant ->
+        def BASE_URL = "https://api.themoviedb.org/3/"
+        variant.buildConfigField "String", "BASE_URL", "\"${BASE_URL}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.core:core-ktx:$core_ktx"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$iunit_ext_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+
+    testImplementation "org.mockito:mockito-core:2.+"
+    testImplementation 'android.arch.core:core-testing:1.0.0-rc1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "android.arch.lifecycle:extensions:$archComponents_version"
+
+    implementation "androidx.preference:preference-ktx:$preference_version"
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    // Retrofit
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit2_rxjava2_adapter_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    implementation "com.android.support:design:$appCompat_version"
+    implementation "com.android.support:support-v4:$appCompat_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    // Support cookies
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:$http_url_connection_version"
+}

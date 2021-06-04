@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.madison.client.movies.feature.details.moviedetails.MovieDetailsViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_16"
+            tools:context=".details.MovieDetailFragment">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16">
+
+                <ImageView
+                    android:id="@+id/imvMoviePoster"
+                    android:layout_width="@dimen/dp_140"
+                    android:layout_height="@dimen/dp_210"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:scaleType="fitXY"
+                    app:movieImage="@{viewModel.movie.posterPath}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvMovieTitle"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:layout_marginBottom="@dimen/dp_4"
+                        android:text="@{viewModel.movie.originalTitle}"
+                        android:textColor="@color/movie_overview_text_color"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:numStars="4"
+                        android:progressBackgroundTint="@android:color/white"
+                        android:progressTint="@color/amber"
+                        android:rating="@{viewModel.movie.popularity}"
+                        android:stepSize="0.5"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMovieTile" />
+
+                    <Button
+                        android:id="@+id/btnBookMovie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="@string/book_movie"
+                        android:theme="@style/Button.ColorPrimary" />
+
+                    <include
+                        layout="@layout/like_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_4"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:layout_marginRight="@dimen/dp_4" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvGenres"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/dp_16"
+                android:paddingVertical="@dimen/dp_10"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                app:genres="@{viewModel.movie.genres}"
+                tools:text="genres" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
+                <View
+                    android:id="@+id/viewDividerTop"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toTopOf="@+id/tvVote"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/labelReleaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:text="@string/duration"
+                    android:textColor="@color/movie_overview_text_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/label_language"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDuration" />
+
+                <TextView
+                    android:id="@+id/tvDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_clock_time"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:gravity="center"
+                    android:textColor="@color/movie_overview_text_color"
+                    app:duration="@{viewModel.movie.runtime}"
+                    app:layout_constraintEnd_toEndOf="@+id/labelReleaseDate"
+                    app:layout_constraintStart_toStartOf="@+id/labelReleaseDate"
+                    app:layout_constraintTop_toTopOf="@+id/tvLanguage"
+                    tools:text="160" />
+
+                <TextView
+                    android:id="@+id/labelVote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    android:textColor="@color/movie_overview_text_color"
+                    app:layout_constraintEnd_toStartOf="@+id/label_language"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvVote"
+                    app:voteCount="@{viewModel.movie.voteCount}"
+                    tools:text="233 votes" />
+
+                <TextView
+                    android:id="@+id/tvVote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_star_black"
+                    android:gravity="center"
+                    android:textColor="@color/movie_overview_text_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/labelVote"
+                    app:layout_constraintStart_toStartOf="@+id/labelVote"
+                    app:voteAvg="@{viewModel.movie.voteAverage}"
+                    tools:text="7/10" />
+
+                <TextView
+                    android:id="@+id/label_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:text="@string/language"
+                    android:textColor="@color/movie_overview_text_color"
+                    app:layout_constraintEnd_toStartOf="@+id/labelReleaseDate"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/labelVote"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLanguage" />
+
+                <TextView
+                    android:id="@+id/tvLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
+                    android:text="@{viewModel.movie.originalLanguage}"
+                    android:textColor="@color/movie_overview_text_color"
+                    app:layout_constraintEnd_toEndOf="@+id/label_language"
+                    app:layout_constraintStart_toStartOf="@+id/label_language"
+                    app:layout_constraintTop_toTopOf="@+id/tvVote"
+                    tools:text="en" />
+
+                <View
+                    android:id="@+id/viewDividerBottom"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/labelVote" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvMovieOverview"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:text="@{viewModel.movie.overview}"
+                android:textColor="@color/movie_overview_text_color"
+                android:textIsSelectable="true" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
